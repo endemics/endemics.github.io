@@ -2,3 +2,4 @@ name: Gildas' tech blog
 tagline:
 markdown: kramdown
 baseurl:
+permalink: /:year/:month/:day/:title

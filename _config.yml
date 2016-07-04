@@ -1,2 +1,4 @@
-name: Gildas' technical blog
+name: Gildas' tech blog
+tagline:
 markdown: kramdown
+baseurl:

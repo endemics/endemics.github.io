@@ -3,13 +3,13 @@ layout: post
 title: Designing a terraform workflow - part 1 (the context)
 ---
 
-For my current client, I had to design and implement a green field solution to manage AWS resources.
+For my current client, I had to design and implement a green field solution to manage AWS resources and decided to base it on [Terraform](https://www.terraform.io/).
 
-Because it is a company operating in a regulated environment, there are a few regulatory constraints that need to be met, but the idea was to automate them as much as possible as part of the workflow instead of having manual steps and policies.
+Because my client is a company operating in a regulated environment, there are a few regulatory constraints that need to be met, but the idea was to automate them as much as possible as part of the workflow instead of having manual steps and policies.
 
 A very interesting aspect was that my client wanted to allow as many of its employees as possible to experiment with new AWS technologies as freely as possible, instead of relying on a limited team of "devops" designing "blueprints". The idea was that leveraging AWS innovation this way would be more effective. But at the same time, there was a need to have safe-guards and controls in place to meet the regulatory requirements.
 
-The main constraint for the workflow were:
+The main constraints for the workflow were:
 
 - reproduceable, auditable, testable, self-documented
 - allow parallel changes and branch builds
@@ -19,9 +19,9 @@ The main constraint for the workflow were:
 
 ### Why terraform?
 
-When looking at managing AWS resources, the default choice is obviously CloudFormation.
+When looking at managing AWS resources, the default choice is obviously [CloudFormation](https://aws.amazon.com/cloudformation/).
 
-However I decided Terraform was the right tool for the job in that case because of a the following.
+However I decided Terraform was the right tool for the job in that case because of the following.
 
 #### a better format
 

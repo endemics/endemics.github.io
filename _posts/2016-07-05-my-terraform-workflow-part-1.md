@@ -23,7 +23,7 @@ When looking at managing AWS resources, the default choice is obviously [CloudFo
 
 However I decided Terraform was the right tool for the job in that case because of the following.
 
-#### a better format
+#### A better format
 
 I believe that the terraform DSL is a better choice than the pure JSON format of CloudFormation if only for its native support of comments, but also because it feels a bit terser and higher-level.
 
@@ -33,19 +33,19 @@ The ability of Terraform to support arbitrary segmentation between files in the 
 
 The module support in Terraform is also much better IMHO than the CloudFormation nested-stack approach to promote reusability (nested stacks counts in the stack limits, and are hard to debug when they fail as the logs are not accessible from the console).
 
-#### resource types
+#### Resource types
 
 While terraform is a bit behind in terms of resources supported when compared to cloudformation, it is catching up quickly and I believe that will only accelerate: by its opensource nature, there are increasingly more and more devs behind it, while on the other end the AWS CloudFormation team is a finite resource (and pretty small too I gather, unless AWS decides to ask for the feature teams to do the CloudFormation integration too).
 
 But the main difference here is while it is possible to create custom resources in CloudFormation, once they are natively implemented, you need to destroy/recreate them, which might be impractical. In Terraform on the other end you can create manually resources and then "reclaim" management of existing resources once the native support is added in terraform, by adding the corresponding information in the DSL and the state files.
 
-#### ownership of the management and orchestration layer
+#### Ownership of the management and orchestration layer
 
 While there are SaaS alternatives that could have provided an easier way to manage resources through a Web UI for instance, it was important for my client to keep a control and ownership of that management layer because it is operating in a regulated environment.
 
 This also means that something like Atlas was not an acceptable solution so we would have to reimplement things that Atlas would provide, such as locking/concurrent changes.
 
-#### multi-cloud
+#### Multi-cloud
 
 Probably the most obvious: while the initial implementation for the project is in AWS, my client wanted to keep its options open and be able to use the same tool to manage other cloud resources (public, private).
 

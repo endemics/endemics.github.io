@@ -2,6 +2,7 @@
 title: "On the Shortcomings of Systems and Networks Engineers Training"
 date: 2009-01-16T20:29:00Z
 draft: false
+categories: ["Technology"]
 tags: []
 ---
 

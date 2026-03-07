@@ -2,6 +2,7 @@
 title: "Why I Don't Want a 1024x600 Screen"
 date: 2010-06-02T17:13:00Z
 draft: false
+categories: ["Technology"]
 tags: []
 ---
 

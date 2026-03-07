@@ -2,4 +2,4 @@ public/
 docs/
 resources/
 .hugo_build.lock
-
+.DS_Store

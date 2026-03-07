@@ -12,6 +12,8 @@ endemics-blog/
 ├── .github/
 │   └── workflows/
 │       └── hugo.yml
+├── static/
+│   └── images/
 ├── content/
 ├── themes/
 ├── hugo.toml

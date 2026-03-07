@@ -2,6 +2,7 @@
 title: "Self Documented Agile Infrastructure"
 date: 2009-03-02T14:13:00Z
 draft: false
+categories: ["Technology"]
 tags: []
 ---
 

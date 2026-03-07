@@ -2,6 +2,7 @@
 title: "Devops Meetups and Devops Dojos"
 date: 2010-07-27T23:30:00Z
 draft: false
+categories: ["Technology"]
 tags: []
 ---
 ## Devopsday USA 2010 and the first Silicon Valley Devops Meetup

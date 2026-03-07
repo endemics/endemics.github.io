@@ -2,6 +2,7 @@
 title: "Réponse au post de l'Institut Agile : \"Devops - premières rencontres et survol\""
 date: 2010-12-03T16:37:00Z
 draft: false
+categories: ["Technology"]
 tags: []
 ---
 

@@ -2,6 +2,7 @@
 title: "The Certified DBA"
 date: 2010-03-25T02:11:18Z
 draft: false
+categories: ["Technology"]
 tags: []
 ---
 

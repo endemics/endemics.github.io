@@ -2,6 +2,7 @@
 title: "Designing a terraform workflow - part 1 (the context)"
 date: 2016-07-05T00:00:00Z
 draft: false
+categories: ["Technology"]
 tags: []
 ---
 

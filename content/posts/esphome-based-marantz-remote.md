@@ -1,7 +1,7 @@
 ---
 title: "Esphome Based Marantz Remote"
 date: 2026-03-07T04:30:31Z
-draft: true
+draft: false
 categories: ["Technology"]
 tags: [ "Home Assistant", "ESPHOME" ]
 ---

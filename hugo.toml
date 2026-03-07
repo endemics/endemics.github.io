@@ -1,0 +1,9 @@
+baseURL = 'https://endemics.github.io/'
+languageCode = 'en-gbh'
+title = 'Endemics blog'
+theme = 'PaperMod'
+contentDir = 'content'
+publishDir = 'public'
+
+[params]
+  author = "Gildas Le Nadan"

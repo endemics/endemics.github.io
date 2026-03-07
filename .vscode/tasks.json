@@ -1,0 +1,35 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Hugo: Start Server",
+      "type": "shell",
+      "command": "hugo server --buildDrafts --buildFuture --bind 0.0.0.0",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "Hugo: Build Site",
+      "type": "shell",
+      "command": "hugo --minify",
+      "problemMatcher": []
+    },
+    {
+      "label": "Hugo: New Post",
+      "type": "shell",
+      "command": "hugo new content/posts/$(echo '${input:postName}' | tr '[:upper:] ' '[:lower:]-').md",
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "postName",
+      "type": "promptString",
+      "description": "Post title (spaces will be converted to hyphens)"
+    }
+  ]
+}

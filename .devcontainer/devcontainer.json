@@ -1,0 +1,27 @@
+{
+  "name": "Hugo Blog",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "budparr.language-hugo-vscode",
+        "davidanson.vscode-markdownlint",
+        "tamasfe.even-better-toml"
+      ]
+    }
+  },
+
+  "forwardPorts": [1313],
+  
+  "postCreateCommand": "git config --global --add safe.directory /workspace && hugo version",
+
+  "workspaceFolder": "/workspace",
+  
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
+  ]
+}
+

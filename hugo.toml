@@ -5,5 +5,7 @@ theme = 'PaperMod'
 contentDir = 'content'
 publishDir = 'public'
 
+enableEmoji = true
+
 [params]
   author = "Gildas Le Nadan"

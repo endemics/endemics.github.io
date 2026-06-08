@@ -1,13 +1,14 @@
 ---
 title: "Bringing a Degraded mdadm RAID1 Back From the Brink"
-mermaid: true
-date: 2026-06-08T20:32:00
+date: 2026-06-08T10:58:28Z
 draft: false
 categories: ["Technology"]
-tags: [ "Home Assistant", "Linux", "RAID" ]
+tags: [ "Linux", "RAID" ]
 ---
 
 A war story about a failed RAID1 mirror, a stubborn superblock, a colon in an array name, a cable knocked loose mid-rebuild, and five bad sectors hiding in — of all things — a rescue image. If you've ever stared at `add new device failed ... Invalid argument` and wondered what you broke, this one's for you.
+
+Claude helped a lot, both during the diagnostic, and to write down this post. At this stage, hallucinations are shared and unvoluntary.
 
 ## The starting point
 
@@ -64,7 +65,7 @@ Zeroing the first megabyte destroys any superblock regardless of what mdadm or `
 
 ## Lesson 3: data offset and metadata must actually line up
 
-With the surviving member identified as `/dev/sdb1` (not the partition originally assumed), comparing the two superblocks revealed the partitions started at different sectors, producing different data offsets. For a v1.2 mirror, the data offset recorded in the superblock has to be consistent, so the replacement partition was rebuilt to start at exactly the same sector as the survivor.
+With the surviving member identified as `/dev/sdb1`, comparing the two superblocks revealed the partitions started at different sectors, producing different data offsets. For some reasons, while this worked before, it seems that for a v1.2 mirror, the data offset recorded in the superblock has to be consistent, so the replacement partition was rebuilt to start at exactly the same sector as the survivor (the swap volume that was the first partition gave its existence for the cause and will be recreated as /dev/sdc2).
 
 On GPT disks with `sgdisk`/`sfdisk`, the recipe is: wipe the target disk's partition table, then create a single RAID partition with the **same start sector and size** as the survivor. The surviving member's start and size came straight from `sfdisk --dump`:
 
@@ -81,6 +82,8 @@ Several attempts to force-write a superblock with `mdadm --create` died on:
 ```
 Value "danu:0" cannot be set as name. Reason: Not POSIX compatible.
 ```
+
+(we also had similar failures with /dev/sdcX or other combinations, we're not narrow-minded)
 
 mdadm 4.3 rejects an array `--name` containing a colon. The original name `danu:0` is really a homehost (`danu`) plus an array index (`0`). The correct way to express it:
 
@@ -139,7 +142,7 @@ This time it took. With both superblocks written by the same mdadm against a fre
 
 ## Plot twist: a cable knock mid-rebuild
 
-About 85% into the rebuild, the second drive got marked failed. Cause: a SATA cable was nudged. After reseating it and rebooting, the array reappeared as `md127` (the kernel's fallback name when no `mdadm.conf` entry matches) with the survivor active and degraded — exactly the safe state to recover from.
+About 85% into the rebuild (e.g. around 5 hours), the second drive got marked failed. Cause: a SATA cable was nudged (while trying to reset a usb cable for an external drive... long story). After reseating it and rebooting, the array reappeared as `md127` (the kernel's fallback name when no `mdadm.conf` entry matches) with the survivor active and degraded — exactly the safe state to recover from.
 
 The survivor's data was never at risk: during a RAID1 rebuild the source is only *read*, while the target is *written*, so a mid-rebuild disconnect only affects the target. Renaming back and resuming:
 
@@ -187,6 +190,8 @@ echo 1 > /sys/block/sdb/device/queue_depth
 ```
 
 ## Lesson 7: healing pending sectors — and what a `repair` can't do
+
+Note: We also ran `smartctl -l scterc,70,70 /dev/sdc` for good measure during this step.
 
 The instinct was to run an md `repair` scrub to remap the bad sectors:
 
@@ -254,4 +259,6 @@ update-initramfs -u
 - **Modern mdadm rejects colons in `--name`;** use `--homehost` + `--name`.
 - **CRC errors are cable/link problems, not platter problems.** Don't condemn a drive for a high CRC count.
 - **An md `repair` can't heal a sector that's unreadable on both mirrors** — force a write (delete + zerofill, or rewrite the affected file) to remap pending sectors.
-- **RAID1 is not a backup.** It survived a single drive degrading; it would not have survived the controller corrupting both. Keep a real off-array copy — especially on twenty-year-old hardware.
+- **RAID1 is not a backup.** (Repeat after me Yann: _"Raid is not a backup"_ :stuck_out_tongue_winking_eye:) It survived a single drive degrading; it would not have survived the controller corrupting both. Keep a real off-array copy — especially on twenty-year-old hardware.
+
+_"Trust me, I'm a professional"_... Erm..

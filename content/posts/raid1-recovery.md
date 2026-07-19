@@ -212,7 +212,7 @@ debugfs -R "icheck 714998448" /dev/md0     # block -> inode
 debugfs -R "ncheck 105808316" /dev/md0     # inode -> path
 ```
 
-Both bad blocks mapped to a single inode, and `ncheck` named it: `/backup/blackbox/rescue.img` — a ddrescue capture of a *previously* failed NVMe drive. (The path from `debugfs` is relative to the filesystem root; on the running system it lived under the `/data` mountpoint.) Fittingly, the corruption was probably in a region ddrescue had never recovered from the original drive in the first place.
+Both bad blocks mapped to a single inode, and `ncheck` named it: `/backup/blackbox/rescue.img` — a ddrescue capture of a *previously* failed NVMe drive. (The path from `debugfs` is relative to the filesystem root; on the running system it lived under the `/data` mountpoint.) Fittingly, the corruption was probably in a region ddrescue had never recovered from the original drive in the first place. (Plot twist: the NVMe drive was actually fine, one of the DIMM of the source machine wasn't, though).
 
 Because the file was expendable and backed up externally, the cleanest cure was to delete it and overwrite the freed space, forcing the drive to write (and thus remap) the pending sectors:
 
